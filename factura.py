@@ -144,9 +144,9 @@ def main(page: ft.Page):
                 producto_row = ft.Row(
                     [
                         ft.Text(concepto, width=200),
-                        ft.Text(f"${precio:.2f}", width=100),
-                        ft.Text(str(cantidad), width=100),
-                        ft.Text(f"${nuevo_producto.monto:.2f}", width=100),
+                        ft.Text(f"${precio:,.2f}", width=100),  # Formateado con puntos de miles
+                        ft.Text(str(cantidad), width=100, text_align=ft.TextAlign.CENTER),
+                        ft.Text(f"${nuevo_producto.monto:,.2f}", width=100),  # Formateado con puntos de miles
                         ft.IconButton(ft.icons.DELETE, on_click=eliminar_producto),
                     ]
                 )
@@ -162,6 +162,12 @@ def main(page: ft.Page):
             page.snack_bar = ft.SnackBar(ft.Text("Por favor, ingrese valores válidos"))
             page.snack_bar.open = True
             page.update()
+
+
+    def actualizar_total():
+        total = sum(producto.monto for producto in productos)
+        total_text.value = f"Total: ${total:,.2f}"  # Formateado con puntos de miles
+        page.update()
 
         
     def guardar_pdf(e):
@@ -200,7 +206,7 @@ def main(page: ft.Page):
             firma_y_total = [
                 [
                     Paragraph("Firma: ___________________________", estilos["Normal"]),
-                    Paragraph(f"Total a Pagar: ${total:.2f}", estilos["Heading4"]),
+                    Paragraph(f"Total a Pagar: ${total:,.2f}", estilos["Heading4"]),
                 ]
             ]
 
@@ -225,15 +231,16 @@ def main(page: ft.Page):
         # Crear contenido dinámico
         elementos = []
 
-        # Rutas de los logos
-        logo_izquierdo = r"C:\Users\Aguirre\Documents\facturacion electronica\logo.png"
+                # Rutas de los logos
+        logo_izquierdo = "imagenes/logo.png"
         logos_derecha = [
-            r"C:\Users\Aguirre\Documents\facturacion electronica\colombina.png",
-            r"C:\Users\Aguirre\Documents\facturacion electronica\amer.png",
-            r"C:\Users\Aguirre\Documents\facturacion electronica\mas.png",
-            r"C:\Users\Aguirre\Documents\facturacion electronica\postobon.png",
-            r"C:\Users\Aguirre\Documents\facturacion electronica\bavaria.png",
+            "imagenes/colombina.png",
+            "imagenes/amer.png",
+            "imagenes/mas.png",
+            "imagenes/postobon.png",
+            "imagenes/bavaria.png",
         ]
+
 
         # Cargar logo izquierdo
         if os.path.exists(logo_izquierdo):
@@ -283,7 +290,7 @@ def main(page: ft.Page):
         elementos.append(Spacer(1, 7))  # Espacio después de los logos
 
         # Título
-        titulo = Paragraph("Dulcería <b>R y V</b>", estilos["Title"])
+        titulo = Paragraph("DULCERIA <b>R & V</b>", estilos["Title"])
         elementos.append(titulo)
         elementos.append(Spacer(1, 2))  # Espacio después del título
 
@@ -312,13 +319,13 @@ def main(page: ft.Page):
         elementos.append(tabla_recuadro)
         elementos.append(Spacer(1, 7))  # Espacio después del recuadro
 
-        # Crear la tabla con los productos
-        data = [["Producto", "Precio Unitario", "Cantidad", "Total"]] + [
-            [p.concepto, f"${p.precio_unitario:.2f}", p.cantidad, f"${p.monto:.2f}"]
-            for p in productos
+            # Crear la tabla con los productos
+        data = [["No.", "Producto", "Precio Unitario", "Cantidad", "Total"]] + [
+            [index + 1, p.concepto, f"${p.precio_unitario:,.2f}", p.cantidad, f"${p.monto:,.2f}"]
+            for index, p in enumerate(productos)
         ]
 
-        col_widths = [280, 100, 100, 100]  # Ancho de las columnas
+        col_widths = [50, 230, 100, 100, 100]  # Ancho de las columnas
 
         tabla_productos = Table(data, colWidths=col_widths)
         tabla_productos.setStyle(
@@ -337,6 +344,7 @@ def main(page: ft.Page):
         )
         elementos.append(tabla_productos)
         elementos.append(Spacer(1, 7))  # Espacio después de la tabla de productos
+
 
         # Generar el documento PDF
         doc.build(elementos)
