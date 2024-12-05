@@ -171,10 +171,18 @@ def main(page: ft.Page):
 
         
     def guardar_pdf(e):
-        ruta_guardado = r"C:\Users\Aguirre\Documents\facturacion electronica\facturas"
+       
+            # Definir la ruta base del proyecto
+        ruta_base = os.path.dirname(os.path.abspath(__file__))  # Obtiene la ruta del archivo Python actual
+
+        # Crear la ruta relativa a la carpeta de facturas dentro del proyecto
+        ruta_guardado = os.path.join(ruta_base, "facturas")
+
+        # Verificar si la carpeta existe, si no, crearla
         if not os.path.exists(ruta_guardado):
             os.makedirs(ruta_guardado)
 
+        # Generar el nombre del archivo con la fecha y hora
         fecha_hora = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         archivo = os.path.join(ruta_guardado, f"factura_{fecha_hora}.pdf")
 
