@@ -240,14 +240,19 @@ def main(page: ft.Page):
         elementos = []
 
                 # Rutas de los logos
-        logo_izquierdo = "imagenes/logo.png"
+       # Definir la ruta base del proyecto
+        ruta_base = os.path.dirname(os.path.abspath(__file__))  # Obtiene la ruta del archivo Python actual
+
+        # Rutas de los logos relativos a la carpeta del proyecto
+        logo_izquierdo = os.path.join(ruta_base, "imagenes", "logo.png")
         logos_derecha = [
-            "imagenes/colombina.png",
-            "imagenes/amer.png",
-            "imagenes/mas.png",
-            "imagenes/postobon.png",
-            "imagenes/bavaria.png",
+            os.path.join(ruta_base, "imagenes", "colombina.png"),
+            os.path.join(ruta_base, "imagenes", "amer.png"),
+            os.path.join(ruta_base, "imagenes", "mas.png"),
+            os.path.join(ruta_base, "imagenes", "postobon.png"),
+            os.path.join(ruta_base, "imagenes", "bavaria.png"),
         ]
+
 
 
         # Cargar logo izquierdo
