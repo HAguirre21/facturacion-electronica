@@ -41,8 +41,8 @@ class Producto:
 def main(page: ft.Page):
     page.title = "Software de Facturación"
     page.theme_mode = ft.ThemeMode.LIGHT
-    page.window_width = 800
-    page.window_height = 800
+    page.window_width = 600
+    page.window_height = 400
     page.scroll = "auto"
 
     productos = []
