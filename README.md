@@ -15,7 +15,7 @@ Solución de software desarrollada íntegramente en **Python** utilizando la lib
 * **Lenguaje:** [Python](https://www.python.org/)
 * **Framework de UI:** [Flet](https://flet.dev/) (Basado en Flutter)
 * **Lógica de Negocio:** Python 3.x
-* **Base de Datos:** [Indicar si usas SQLite u otra]
+* **Base de Datos:** [MySql]
 
 ## 📂 Estructura del Proyecto
 
